@@ -1,7 +1,7 @@
 <template>
     <details>
         <summary class="list-none cursor-pointer p-4">
-            Elvis Gomez
+            {{ name }}
         </summary>
 
         <ul class="bg-blue-50 px-4 py-4">
@@ -17,6 +17,18 @@
         </ul>
     </details>
 </template>
+
+<script setup>
+import { defineProps } from 'vue';
+
+defineProps({
+    name: {
+        type: String,
+        default: '',
+        required: true
+    }
+})
+</script>
 
 <style scoped>
 details summary::-webkit-details-marker {

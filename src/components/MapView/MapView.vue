@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-full aspect-video relative rounded-xl bg-white overflow-hidden">
     <div ref="mapContainer" class="map-container w-full h-full"></div>
-    <SideBar v-model="listId" />
+    <SideBar v-model="peopleList" />
   </div>
 </template>
   
@@ -26,20 +26,48 @@ const geojson = {
         id: 'id-1',
         title: 'Mapbox',
         description: 'Washington, D.C.',
-        counter: 10
+        counter: 10,
+        people: [
+          {
+            name: 'Elvis',
+            last_name: 'Gomez',
+          },
+          {
+            name: 'Cesar',
+            last_name: 'Ramirez',
+          },
+          {
+            name: 'Evan',
+            last_name: 'You',
+          },
+        ]
       }
     },
     {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [-122.414, 37.776]
+        coordinates: [-77.082, 38.973]
       },
       properties: {
         id: 'id-2',
         title: 'Mapbox',
         description: 'San Francisco, California',
-        counter: 5
+        counter: 5,
+        people: [
+          {
+            name: 'Mark',
+            last_name: 'Zucaritas',
+          },
+          {
+            name: 'Cesar',
+            last_name: 'Ramirez',
+          },
+          {
+            name: 'Elon',
+            last_name: 'Musk',
+          },
+        ]
       }
     }
   ]
@@ -47,7 +75,7 @@ const geojson = {
 
 const mapRef = ref(null)
 const mapContainer = ref()
-const listId = ref('')
+const peopleList = ref(null)
 
 onMounted(() => {
   const map = new mapboxgl.Map({
@@ -71,7 +99,7 @@ onMounted(() => {
     marker.getElement().addEventListener('click', () => {
       // Access the properties data of the clicked marker
       console.log(feature.properties);
-      listId.value = feature.properties.id
+      peopleList.value = feature.properties.people
     });
   }
 
@@ -110,4 +138,5 @@ onUnmounted(() => {
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
-}</style>
+}
+</style>
