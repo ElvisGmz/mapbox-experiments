@@ -1,5 +1,5 @@
 <template>
-  <div class="relative p-4 bg-gray-900">
+  <div class="relative p-4 bg-gray-900 min-h-[100svh]">
     <MapView />
   </div>
 </template>

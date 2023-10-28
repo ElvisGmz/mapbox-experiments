@@ -1,30 +1,16 @@
 <template>
-    <details>
-        <summary class="list-none cursor-pointer p-4">
-            {{ name }}
-        </summary>
-
-        <ul class="bg-blue-50 px-4 py-4">
-            <li>
-                Item 1
-            </li>
-            <li>
-                Item 2
-            </li>
-            <li>
-                Item 3
-            </li>
-        </ul>
-    </details>
+     <button @click="$emit('select', data)" class="list-none cursor-pointer p-4 block w-full text-left">
+        {{ data?.name }} {{ data?.last_name }}
+        </button>
 </template>
 
 <script setup>
 import { defineProps } from 'vue';
 
 defineProps({
-    name: {
-        type: String,
-        default: '',
+    data: {
+        type: Object,
+        default: () => {},
         required: true
     }
 })

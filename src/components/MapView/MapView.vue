@@ -1,81 +1,143 @@
 <template>
-  <div class="relative w-full aspect-video relative rounded-xl bg-white overflow-hidden">
+  <div
+    class="relative w-full aspect-[3/4] sm:aspect-square md:aspect-video relative rounded-xl bg-white overflow-hidden"
+  >
     <div ref="mapContainer" class="map-container w-full h-full"></div>
     <SideBar v-model="peopleList" />
+    
   </div>
 </template>
-  
+
 <script setup>
-import { onMounted, ref, onUnmounted } from 'vue'
-import SideBar from './SideBar.vue'
-import "mapbox-gl/dist/mapbox-gl.css"
+import { onMounted, ref, onUnmounted } from "vue";
+import SideBar from "./SideBar.vue";
+import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 
-mapboxgl.accessToken = "pk.eyJ1IjoiY2VzYXJrb2RzIiwiYSI6ImNsNzBoc2NpYzBhZnYzdW8zd2pjNTdkamwifQ.0G9m35T_Emzep17V43q9Ug"
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiY2VzYXJrb2RzIiwiYSI6ImNsNzBoc2NpYzBhZnYzdW8zd2pjNTdkamwifQ.0G9m35T_Emzep17V43q9Ug";
 
 const geojson = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
     {
-      type: 'Feature',
+      type: "Feature",
       geometry: {
-        type: 'Point',
-        coordinates: [-77.032, 38.913]
+        type: "Point",
+        coordinates: [-77.032, 38.913],
       },
       properties: {
-        id: 'id-1',
-        title: 'Mapbox',
-        description: 'Washington, D.C.',
+        id: "id-1",
+        title: "Mapbox",
+        description: "Washington, D.C.",
         counter: 10,
         people: [
           {
-            name: 'Elvis',
-            last_name: 'Gomez',
+            name: "Elvis",
+            last_name: "Gomez",
+            avatar: "URL_de_la_imagen_de_Elvis",
+            logo: "URL_del_logo_de_Elvis",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam? Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam? Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam?Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam? Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam? Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam? Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam? Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam?",
+            socials: [
+              { platform: "Facebook", link: "URL_de_facebook_de_Elvis" },
+              { platform: "Instagram", link: "URL_de_instagram_de_Elvis" },
+              // Puedes agregar más plataformas sociales si es necesario
+            ],
+            categories: [
+              { name: "categoria1", link: "URL_categoria1" },
+              { name: "categoria2", link: "URL_categoria2" },
+              // Puedes agregar más categorías si es necesario
+            ],
           },
           {
-            name: 'Cesar',
-            last_name: 'Ramirez',
+            name: "Cesar",
+            last_name: "Ramirez",
+            avatar: "URL_de_la_imagen_de_Cesar",
+            logo: "URL_del_logo_de_Cesar",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam?",
+            socials: [
+              { platform: "Facebook", link: "URL_de_facebook_de_Cesar" },
+              { platform: "Instagram", link: "URL_de_instagram_de_Cesar" },
+            ],
+            
           },
           {
-            name: 'Evan',
-            last_name: 'You',
+            name: "Evan",
+            last_name: "You",
+            avatar: "URL_de_la_imagen_de_Evan",
+            logo: "URL_del_logo_de_Evan",
+            description: "",
+            socials: [
+              { platform: "Facebook", link: "URL_de_facebook_de_Evan" },
+              { platform: "Instagram", link: "URL_de_instagram_de_Evan" },
+            ],
+            
           },
-        ]
-      }
+        ],
+      },
     },
     {
-      type: 'Feature',
+      type: "Feature",
       geometry: {
-        type: 'Point',
-        coordinates: [-77.082, 38.973]
+        type: "Point",
+        coordinates: [-77.082, 38.973],
       },
       properties: {
-        id: 'id-2',
-        title: 'Mapbox',
-        description: 'San Francisco, California',
+        id: "id-2",
+        title: "Mapbox",
+        description: "San Francisco, California",
         counter: 5,
         people: [
           {
-            name: 'Mark',
-            last_name: 'Zucaritas',
+            name: "Elvis",
+            last_name: "Gomez",
+            avatar: "URL_de_la_imagen_de_Elvis",
+            logo: "URL_del_logo_de_Elvis",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam?",
+            socials: [
+              { platform: "Facebook", link: "URL_de_facebook_de_Elvis" },
+              { platform: "Instagram", link: "URL_de_instagram_de_Elvis" },
+              // Puedes agregar más plataformas sociales si es necesario
+            ],
+            categories: [
+              { name: "categoria1", link: "URL_categoria1" },
+              { name: "categoria2", link: "URL_categoria2" },
+              // Puedes agregar más categorías si es necesario
+            ],
           },
           {
-            name: 'Cesar',
-            last_name: 'Ramirez',
+            name: "Cesar",
+            last_name: "Ramirez",
+            avatar: "URL_de_la_imagen_de_Cesar",
+            logo: "URL_del_logo_de_Cesar",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam?",
+            socials: [
+              { platform: "Facebook", link: "URL_de_facebook_de_Cesar" },
+              { platform: "Instagram", link: "URL_de_instagram_de_Cesar" },
+            ],
+            
           },
           {
-            name: 'Elon',
-            last_name: 'Musk',
+            name: "Evan",
+            last_name: "You",
+            avatar: "URL_de_la_imagen_de_Evan",
+            logo: "URL_del_logo_de_Evan",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. At exercitationem rerum nulla dignissimos temporibus voluptatum tenetur accusamus sequi fugiat laudantium. Nulla, placeat atque a nihil ea fugit deleniti inventore numquam?",
+            socials: [
+              { platform: "Facebook", link: "URL_de_facebook_de_Evan" },
+              { platform: "Instagram", link: "URL_de_instagram_de_Evan" },
+            ],
+            
           },
-        ]
-      }
-    }
-  ]
+        ],
+      },
+    },
+  ],
 };
 
-const mapRef = ref(null)
-const mapContainer = ref()
-const peopleList = ref(null)
+const mapRef = ref(null);
+const mapContainer = ref();
+const peopleList = ref(null);
 
 onMounted(() => {
   const map = new mapboxgl.Map({
@@ -88,32 +150,31 @@ onMounted(() => {
   // add markers to map
   for (const feature of geojson.features) {
     // create a HTML element for each feature
-    const el = document.createElement('div');
-    el.className = 'marker';
-    el.textContent = feature.properties.counter
-
+    const el = document.createElement("div");
+    el.className = "marker";
+    el.textContent = feature.properties.counter;
 
     // make a marker for each feature and add to the map
-    const marker = new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+    const marker = new mapboxgl.Marker(el)
+      .setLngLat(feature.geometry.coordinates)
+      .addTo(map);
 
-    marker.getElement().addEventListener('click', () => {
+    marker.getElement().addEventListener("click", () => {
       // Access the properties data of the clicked marker
       console.log(feature.properties);
-      peopleList.value = feature.properties.people
+      peopleList.value = feature.properties.people;
     });
   }
 
-  mapRef.value = map
-})
+  mapRef.value = map;
+});
 
 onUnmounted(() => {
-  mapRef.value.remove()
-  mapRef.value = null
-})
-
-
+  mapRef.value.remove();
+  mapRef.value = null;
+});
 </script>
-  
+
 <style>
 .map-container {
   position: absolute;
