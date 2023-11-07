@@ -147,6 +147,13 @@ onMounted(() => {
     zoom: 9,
   });
 
+  const popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false,
+    offset: [0, -20]
+    });
+
+
   // add markers to map
   for (const feature of geojson.features) {
     // create a HTML element for each feature
@@ -159,11 +166,20 @@ onMounted(() => {
       .setLngLat(feature.geometry.coordinates)
       .addTo(map);
 
-    marker.getElement().addEventListener("click", () => {
+      marker.getElement().addEventListener("click", () => {
       // Access the properties data of the clicked marker
       console.log(feature.properties);
       peopleList.value = feature.properties.people;
     });
+
+    marker.getElement().addEventListener("mouseover", () => {
+      // Access the properties data of the clicked marker
+      popup.setLngLat(feature.geometry.coordinates).setHTML(feature.properties.description).addTo(map);
+    });
+
+    marker.getElement().addEventListener("mouseleave", () => {
+      popup.remove();
+    })
   }
 
   mapRef.value = map;
@@ -200,4 +216,13 @@ onUnmounted(() => {
   border-radius: 50%;
   cursor: pointer;
 }
+
+.mapboxgl-popup-content {
+  padding: 10px 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 100px;
+  text-align: center;
+}
+
 </style>
