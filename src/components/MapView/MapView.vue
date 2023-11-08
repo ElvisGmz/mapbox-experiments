@@ -1,18 +1,24 @@
 <template>
+  <div class="flex justify-end mb-4">
+    <SearchSelect v-model="selectedCategory" />
+  </div>
   <div
     class="relative w-full aspect-[3/4] sm:aspect-square md:aspect-video relative rounded-xl bg-white overflow-hidden"
   >
-    <div ref="mapContainer" class="map-container w-full h-full"></div>
-    <SideBar v-model="peopleList" />
-    
+  <div ref="mapContainer" class="map-container w-full h-full"></div>
+  <SideBar v-model="peopleList" />
+  
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted, watch } from "vue";
 import SideBar from "./SideBar.vue";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
+import SearchSelect from "./SearchSelect.vue";
+
+const selectedCategory = ref('')
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY2VzYXJrb2RzIiwiYSI6ImNsNzBoc2NpYzBhZnYzdW8zd2pjNTdkamwifQ.0G9m35T_Emzep17V43q9Ug";
@@ -31,6 +37,7 @@ const geojson = {
         title: "Mapbox",
         description: "Washington, D.C.",
         counter: 10,
+        category: 'category-1',
         people: [
           {
             name: "Elvis",
@@ -87,6 +94,7 @@ const geojson = {
         title: "Mapbox",
         description: "San Francisco, California",
         counter: 5,
+        category: 'category-2',
         people: [
           {
             name: "Elvis",
@@ -188,6 +196,65 @@ onMounted(() => {
 onUnmounted(() => {
   mapRef.value.remove();
   mapRef.value = null;
+});
+
+watch(selectedCategory, (newValue) => {
+  const mapInstance = mapRef.value;
+
+  if (mapInstance) {
+    let filteredFeatures = geojson.features;
+
+    if (newValue !== '') {
+      filteredFeatures = geojson.features.filter(feature => feature.properties.category === newValue);
+    }
+
+    const newGeoJSON = {
+      type: 'FeatureCollection',
+      features: filteredFeatures
+    };
+
+    // Remove all existing markers
+    const markers = document.getElementsByClassName('marker');
+    while (markers[0]) {
+      markers[0].parentNode.removeChild(markers[0]);
+    }
+
+    // Add markers for the filtered features
+    for (const feature of filteredFeatures) {
+      const el = document.createElement('div');
+      el.className = 'marker';
+      el.textContent = feature.properties.counter;
+
+      const marker = new mapboxgl.Marker(el)
+        .setLngLat(feature.geometry.coordinates)
+        .addTo(mapInstance);
+
+      marker.getElement().addEventListener('click', () => {
+        peopleList.value = feature.properties.people;
+      });
+    }
+
+    const geojsonSource = mapInstance.getSource('markers'); // Assuming you've named your source 'markers'
+    if (geojsonSource) {
+      geojsonSource.setData(newGeoJSON);
+    } else {
+      mapInstance.addSource('markers', {
+        type: 'geojson',
+        data: newGeoJSON
+      });
+
+      mapInstance.addLayer({
+        id: 'markers',
+        type: 'symbol',
+        source: 'markers',
+        layout: {
+          'icon-image': 'marker-15', // Customize this according to your needs
+          'text-field': '{counter}',
+          'text-size': 12
+        }
+      });
+    }
+  }
 });
 </script>
 
